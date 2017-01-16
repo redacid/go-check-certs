@@ -16,7 +16,7 @@ import (
 	"time"
 	"os"
 )
-
+//States for exit codes, need by nagios
 const STATE_OK = 0
 const STATE_WARNING = 1
 const STATE_CRITICAL = 2
