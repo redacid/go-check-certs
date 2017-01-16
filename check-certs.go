@@ -147,7 +147,7 @@ func processHosts() {
 			}
 		}
 	}
-	fmt.Printf("%d",state);
+	fmt.Printf("%d\n",state);
 	os.Exit(state);
 }
 
