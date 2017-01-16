@@ -32,7 +32,7 @@ const (
 	errSunsetAlg       = "%s: '%s' (S/N %X) expires after the sunset date for its signature algorithm '%s'."
 )
 
-var state int;
+var state int=STATE_OK;
 
 type sigAlgSunset struct {
 	name      string    // Human readable name of signature algorithm
@@ -115,7 +115,7 @@ func main() {
 }
 
 func processHosts() {
-	state = STATE_OK;
+
 	done := make(chan struct{})
 	defer close(done)
 
@@ -165,6 +165,8 @@ func queueHosts(done <-chan struct{}) <-chan string {
 
 		fileContents, err := ioutil.ReadFile(*hostsFile)
 		if err != nil {
+			state = STATE_CRITICAL;
+			fmt.Printf("%d\n",state);
 			return
 		}
 		lines := strings.Split(string(fileContents), "\n")
@@ -201,6 +203,8 @@ func checkHost(host string) (result hostResult) {
 	conn, err := tls.Dial("tcp", host, nil)
 	if err != nil {
 		result.err = err
+		state = STATE_CRITICAL;
+		fmt.Printf("%d\n",state);
 		return
 	}
 	defer conn.Close()
