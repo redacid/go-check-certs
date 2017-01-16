@@ -144,7 +144,9 @@ func processHosts() {
 		}
 		for _, cert := range r.certs {
 			for _, err := range cert.errs {
-				//fmt.Println(err)
+				fmt.Println(err)
+				state = STATE_CRITICAL;
+				fmt.Printf("%d\n",state);
 			}
 		}
 	}
