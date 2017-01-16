@@ -10,11 +10,11 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
-	"log"
+	//"log"
 	"strings"
 	"sync"
 	"time"
-	"os"
+	//"os"
 )
 
 const STATE_OK = 0
