@@ -154,6 +154,7 @@ func processHosts() {
 	if state == STATE_OK {
 		fmt.Print("SSL certs of all domains is OK\n");
 	}
+	//for nagios
 	os.Exit(state);
 }
 
