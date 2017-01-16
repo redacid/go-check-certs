@@ -140,13 +140,13 @@ func processHosts() {
 			fmt.Printf("%s: %v\n", r.host, r.err)
 			continue
 			state = STATE_CRITICAL;
-			fmt.Printf("%d\n",state);
+			//fmt.Printf("%d\n",state);
 		}
 		for _, cert := range r.certs {
 			for _, err := range cert.errs {
 				fmt.Println(err)
 				state = STATE_CRITICAL;
-				fmt.Printf("%d\n",state);
+				//fmt.Printf("%d\n",state);
 			}
 		}
 	}
@@ -166,7 +166,7 @@ func queueHosts(done <-chan struct{}) <-chan string {
 		fileContents, err := ioutil.ReadFile(*hostsFile)
 		if err != nil {
 			state = STATE_CRITICAL;
-			fmt.Printf("%d\n",state);
+			//fmt.Printf("%d\n",state);
 			return
 		}
 		lines := strings.Split(string(fileContents), "\n")
@@ -204,7 +204,7 @@ func checkHost(host string) (result hostResult) {
 	if err != nil {
 		result.err = err
 		state = STATE_CRITICAL;
-		fmt.Printf("%d\n",state);
+		//fmt.Printf("%d\n",state);
 		return
 	}
 	defer conn.Close()
