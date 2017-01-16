@@ -134,12 +134,12 @@ func processHosts() {
 
 	for r := range results {
 		if r.err != nil {
-			log.Printf("%s: %v\n", r.host, r.err)
+			fmt.Printf("%s: %v\n", r.host, r.err)
 			continue
 		}
 		for _, cert := range r.certs {
 			for _, err := range cert.errs {
-				log.Println(err)
+				fmt.Println(err)
 			}
 		}
 	}
@@ -206,19 +206,19 @@ func checkHost(host string) (result hostResult) {
 			if timeNow.AddDate(*warnYears, *warnMonths, *warnDays).After(cert.NotAfter) {
 				expiresIn := int64(cert.NotAfter.Sub(timeNow).Hours())
 				if expiresIn <= 48 {
-					//cErrs = append(cErrs, fmt.Errorf(errExpiringShortly, host, cert.Subject.CommonName, expiresIn))
+					cErrs = append(cErrs, fmt.Errorf(errExpiringShortly, host, cert.Subject.CommonName, expiresIn))
 					//cErrs = append(cErrs, fmt.Errorf(errExpiringShortly, host, cert.Subject.CommonName, cert.SerialNumber, expiresIn))
-					fmt.Printf(errExpiringShortly, host, cert.Subject.CommonName, expiresIn)
-					state := STATE_CRITICAL;
+					//fmt.Printf(errExpiringShortly, host, cert.Subject.CommonName, expiresIn)
+					//state := STATE_CRITICAL;
 				} else {
-					//cErrs = append(cErrs, fmt.Errorf(errExpiringSoon, host, cert.Subject.CommonName, expiresIn/24))
+					cErrs = append(cErrs, fmt.Errorf(errExpiringSoon, host, cert.Subject.CommonName, expiresIn/24))
 					//cErrs = append(cErrs, fmt.Errorf(errExpiringSoon, host, cert.Subject.CommonName, cert.SerialNumber, expiresIn/24))
-					fmt.Printf(errExpiringSoon, host, cert.Subject.CommonName, expiresIn/24)
-					state := STATE_CRITICAL;
+					//fmt.Printf(errExpiringSoon, host, cert.Subject.CommonName, expiresIn/24)
+					//state := STATE_CRITICAL;
 				}
 
 			} else {
-				state := STATE_OK;
+				//state := STATE_OK;
 			}
 
 
