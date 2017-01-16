@@ -209,18 +209,23 @@ func checkHost(host string) (result hostResult) {
 					//cErrs = append(cErrs, fmt.Errorf(errExpiringShortly, host, cert.Subject.CommonName, expiresIn))
 					//cErrs = append(cErrs, fmt.Errorf(errExpiringShortly, host, cert.Subject.CommonName, cert.SerialNumber, expiresIn))
 					fmt.Printf(errExpiringShortly, host, cert.Subject.CommonName, expiresIn)
+					state := STATE_CRITICAL;
 				} else {
 					//cErrs = append(cErrs, fmt.Errorf(errExpiringSoon, host, cert.Subject.CommonName, expiresIn/24))
 					//cErrs = append(cErrs, fmt.Errorf(errExpiringSoon, host, cert.Subject.CommonName, cert.SerialNumber, expiresIn/24))
 					fmt.Printf(errExpiringSoon, host, cert.Subject.CommonName, expiresIn/24)
+					state := STATE_CRITICAL;
 				}
-				os.Exit(STATE_CRITICAL);
+
+			} else {
+				state := STATE_OK;
 			}
+
 
 			// Check the signature algorithm, ignoring the root certificate.
 			if alg, exists := sunsetSigAlgs[cert.SignatureAlgorithm]; *checkSigAlg && exists && certNum != len(chain)-1 {
 				if cert.NotAfter.Equal(alg.sunsetsAt) || cert.NotAfter.After(alg.sunsetsAt) {
-					//cErrs = append(cErrs, fmt.Errorf(errSunsetAlg, host, cert.Subject.CommonName, cert.SerialNumber, alg.name))
+					cErrs = append(cErrs, fmt.Errorf(errSunsetAlg, host, cert.Subject.CommonName, cert.SerialNumber, alg.name))
 				}
 			}
 
