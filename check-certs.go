@@ -203,7 +203,7 @@ func checkHost(host string) (result hostResult) {
 					cErrs = append(cErrs, fmt.Errorf(errExpiringShortly, host, cert.Subject.CommonName, expiresIn))
 					//cErrs = append(cErrs, fmt.Errorf(errExpiringShortly, host, cert.Subject.CommonName, cert.SerialNumber, expiresIn))
 				} else {
-					cErrs = append(, fmt.Errorf(errExpiringSoon, host, cert.Subject.CommonName, expiresIn/24))
+					cErrs = append(cErrs, fmt.Errorf(errExpiringSoon, host, cert.Subject.CommonName, expiresIn/24))
 					//cErrs = append(cErrs, fmt.Errorf(errExpiringSoon, host, cert.Subject.CommonName, cert.SerialNumber, expiresIn/24))
 				}
 			//}
