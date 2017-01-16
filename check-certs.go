@@ -19,11 +19,11 @@ import (
 const defaultConcurrency = 8
 //---
 const (
-	errExpiringShortly = "%s: ** '%s' expires in %d hours! **"
+	errExpiringShortly = "%s: ** '%s' expires in %d hours! **\n"
 	//errExpiringShortly = "%s: ** '%s' (S/N %X) expires in %d hours! **"
-	errExpiringSoon    = "%s: '%s' expires in roughly %d days."
+	errExpiringSoon    = "%s: '%s' expires in roughly %d days.\n"
 	//errExpiringSoon    = "%s: '%s' (S/N %X) expires in roughly %d days."
-	errSunsetAlg       = "%s: '%s' (S/N %X) expires after the sunset date for its signature algorithm '%s'."
+	errSunsetAlg       = "%s: '%s' (S/N %X) expires after the sunset date for its signature algorithm '%s'.\n"
 )
 
 type sigAlgSunset struct {
