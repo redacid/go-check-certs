@@ -152,7 +152,7 @@ func processHosts() {
 	}
 	//fmt.Printf("Exit state: %d\n",state);
 	if state == STATE_OK {
-		fmt.Print("SSL of all domains is OK\n");
+		fmt.Print("SSL certs of all domains is OK\n");
 	}
 	os.Exit(state);
 }
