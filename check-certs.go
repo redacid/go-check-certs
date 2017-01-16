@@ -14,7 +14,7 @@ import (
 	"strings"
 	"sync"
 	"time"
-	//"os"
+	"os"
 )
 
 const STATE_OK = 0
@@ -31,6 +31,8 @@ const (
 	//errExpiringSoon    = "%s: '%s' (S/N %X) expires in roughly %d days."
 	errSunsetAlg       = "%s: '%s' (S/N %X) expires after the sunset date for its signature algorithm '%s'."
 )
+
+var state int;
 
 type sigAlgSunset struct {
 	name      string    // Human readable name of signature algorithm
@@ -113,6 +115,7 @@ func main() {
 }
 
 func processHosts() {
+	state = STATE_OK;
 	done := make(chan struct{})
 	defer close(done)
 
@@ -136,6 +139,7 @@ func processHosts() {
 		if r.err != nil {
 			fmt.Printf("%s: %v\n", r.host, r.err)
 			continue
+			state = STATE_CRITICAL;
 		}
 		for _, cert := range r.certs {
 			for _, err := range cert.errs {
@@ -143,6 +147,8 @@ func processHosts() {
 			}
 		}
 	}
+	fmt.Printf("%d",state);
+	os.Exit(state);
 }
 
 func queueHosts(done <-chan struct{}) <-chan string {
