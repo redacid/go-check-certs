@@ -140,6 +140,7 @@ func processHosts() {
 			fmt.Printf("%s: %v\n", r.host, r.err)
 			continue
 			state = STATE_CRITICAL;
+			fmt.Printf("%d\n",state);
 		}
 		for _, cert := range r.certs {
 			for _, err := range cert.errs {
