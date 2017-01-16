@@ -150,7 +150,7 @@ func processHosts() {
 			}
 		}
 	}
-	//fmt.Printf("%d\n",state);
+	fmt.Printf("%d\n",state);
 	os.Exit(state);
 }
 
