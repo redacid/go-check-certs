@@ -14,10 +14,16 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"os"
 )
 
+const STATE_OK = 0
+const STATE_WARNING = 1
+const STATE_CRITICAL = 2
+const STATE_UNKNOWN = 3
+
 const defaultConcurrency = 8
-//---
+
 const (
 	errExpiringShortly = "%s: ** '%s' expires in %d hours! **\n"
 	//errExpiringShortly = "%s: ** '%s' (S/N %X) expires in %d hours! **"
@@ -197,7 +203,7 @@ func checkHost(host string) (result hostResult) {
 			cErrs := []error{}
 
 			// Check the expiration.
-			//if timeNow.AddDate(*warnYears, *warnMonths, *warnDays).After(cert.NotAfter) {
+			if timeNow.AddDate(*warnYears, *warnMonths, *warnDays).After(cert.NotAfter) {
 				expiresIn := int64(cert.NotAfter.Sub(timeNow).Hours())
 				if expiresIn <= 48 {
 					//cErrs = append(cErrs, fmt.Errorf(errExpiringShortly, host, cert.Subject.CommonName, expiresIn))
@@ -208,7 +214,8 @@ func checkHost(host string) (result hostResult) {
 					//cErrs = append(cErrs, fmt.Errorf(errExpiringSoon, host, cert.Subject.CommonName, cert.SerialNumber, expiresIn/24))
 					fmt.Printf(errExpiringSoon, host, cert.Subject.CommonName, expiresIn/24)
 				}
-			//}
+				os.Exit(STATE_CRITICAL);
+			}
 
 			// Check the signature algorithm, ignoring the root certificate.
 			if alg, exists := sunsetSigAlgs[cert.SignatureAlgorithm]; *checkSigAlg && exists && certNum != len(chain)-1 {
