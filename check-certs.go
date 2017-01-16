@@ -200,10 +200,10 @@ func checkHost(host string) (result hostResult) {
 			if timeNow.AddDate(*warnYears, *warnMonths, *warnDays).After(cert.NotAfter) {
 				expiresIn := int64(cert.NotAfter.Sub(timeNow).Hours())
 				if expiresIn <= 48 {
-					cErrs = append(cErrs, fmt.Printf(errExpiringShortly, host, cert.Subject.CommonName, expiresIn))
+					cErrs = append(cErrs, fmt.Sprintf(errExpiringShortly, host, cert.Subject.CommonName, expiresIn))
 					//cErrs = append(cErrs, fmt.Errorf(errExpiringShortly, host, cert.Subject.CommonName, cert.SerialNumber, expiresIn))
 				} else {
-					cErrs = append(cErrs, fmt.Printf(errExpiringSoon, host, cert.Subject.CommonName, expiresIn/24))
+					cErrs = append(cErrs, fmt.Sprintf(errExpiringSoon, host, cert.Subject.CommonName, expiresIn/24))
 					//cErrs = append(cErrs, fmt.Errorf(errExpiringSoon, host, cert.Subject.CommonName, cert.SerialNumber, expiresIn/24))
 				}
 			}
