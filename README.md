@@ -3,9 +3,9 @@ go-check-certs
 
 Build:
 ------
-go mod init main
-go mod tidy
-go build
+`go mod init main`    
+`go mod tidy `   
+`go build`  
 
 This is a simple utility written in Go to check SSL certificates for a list of hosts. Each certificate in the host's certificate chain is checked for the following:
 
